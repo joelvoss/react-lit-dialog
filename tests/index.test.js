@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { render, userEvent } from './test-utils';
-import { axe } from 'jest-axe';
 
 import { Dialog } from '../src/index';
 
