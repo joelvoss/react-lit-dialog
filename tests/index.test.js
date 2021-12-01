@@ -30,8 +30,7 @@ describe(`<Dialog />`, () => {
 
 	it(`should not have ARIA violations`, async () => {
 		let { container } = render(<Comp show={true} />);
-		let results = await axe(container);
-		expect(results).toHaveNoViolations();
+		await expect(container).toHaveNoAxeViolations();
 	});
 
 	it(`should render proper HTML`, () => {
