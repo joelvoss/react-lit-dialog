@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef } from 'react';
+import * as React from 'react';
 import {
 	getOwnerDocument,
 	noop,
@@ -15,7 +15,7 @@ import { FocusScope } from '@react-lit/focus-scope';
  * Dialog renders a high-level component to render a modal dialog window over
  * the top of the page (or another dialog).
  */
-export const Dialog = forwardRef(
+export const Dialog = React.forwardRef(
 	({ isOpen, onDismiss = noop, initialFocusRef, ...props }, parentRef) => (
 		<DialogOverlay
 			isOpen={isOpen}
@@ -35,12 +35,12 @@ export const Dialog = forwardRef(
  *
  * Note: You must render a `DialogContent` inside.
  */
-export const DialogOverlay = forwardRef(
+export const DialogOverlay = React.forwardRef(
 	({ as: Comp = 'div', isOpen = true, ...props }, parentRef) => {
 		// NOTE(joel): We want to ignore the immediate focus of a tooltip so it
 		// doesn't pop up again when the menu closes. It should only pop up when
 		// focus returns again to the tooltip (like native OS tooltips).
-		useEffect(() => {
+		React.useEffect(() => {
 			if (isOpen) {
 				window.__REACT_LIT_DISABLE_TOOLTIPS = true;
 			} else {
@@ -64,7 +64,7 @@ export const DialogOverlay = forwardRef(
 /**
  * DialogInner
  */
-export const DialogInner = forwardRef(
+export const DialogInner = React.forwardRef(
 	(
 		{
 			as: Comp = 'div',
@@ -79,8 +79,8 @@ export const DialogInner = forwardRef(
 		},
 		forwardedRef,
 	) => {
-		const mouseDownTarget = useRef(null);
-		const overlayNode = useRef(null);
+		const mouseDownTarget = React.useRef(null);
+		const overlayNode = React.useRef(null);
 		const ref = useComposeRefs(overlayNode, forwardedRef);
 
 		usePreventScroll(!dangerouslyBypassScrollLock);
@@ -115,7 +115,7 @@ export const DialogInner = forwardRef(
 			mouseDownTarget.current = event.target;
 		}
 
-		useEffect(
+		React.useEffect(
 			() =>
 				overlayNode.current ? createAriaHider(overlayNode.current) : void null,
 			[],
@@ -161,7 +161,7 @@ export const DialogInner = forwardRef(
  * to it. Any props passed to `Dialog` component (besides `isOpen` and
  * `onDismiss`) will be spread onto `DialogContent`.
  */
-export const DialogContent = forwardRef(
+export const DialogContent = React.forwardRef(
 	({ as: Comp = 'div', onClick, onKeyDown, style, ...props }, parentRef) => (
 		<Comp
 			aria-modal="true"
