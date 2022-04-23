@@ -32,67 +32,67 @@ describe(`<Dialog />`, () => {
 		await expect(container).toHaveNoAxeViolations();
 	});
 
-	it(`should render proper HTML`, () => {
+	it(`should render proper HTML`, async () => {
 		let { queryByTestId } = render(<Comp />);
 		expect(queryByTestId('outer')).toBeTruthy();
 		expect(queryByTestId('inner')).toBeNull();
 	});
 
-	it(`should open and close the dialog`, () => {
+	it(`should open and close the dialog`, async () => {
 		const { getByText, queryByTestId } = render(<Comp />);
 
 		expect(queryByTestId('outer')).toBeTruthy();
 		expect(queryByTestId('inner')).toBeNull();
 
-		userEvent.click(getByText(/show/i));
+		await userEvent.click(getByText(/show/i));
 
 		expect(queryByTestId('outer')).toBeTruthy();
 		expect(queryByTestId('inner')).toBeTruthy();
 
-		userEvent.click(getByText(/Close/i));
+		await userEvent.click(getByText(/Close/i));
 
 		expect(queryByTestId('outer')).toBeTruthy();
 		expect(queryByTestId('inner')).toBeNull();
 	});
 
-	it(`should close the dialog when the overlay is clicked`, () => {
+	it(`should close the dialog when the overlay is clicked`, async () => {
 		const { baseElement, queryByTestId } = render(<Comp show={true} />);
 
 		expect(queryByTestId('outer')).toBeTruthy();
 		expect(queryByTestId('inner')).toBeTruthy();
 
 		const overlay = getOverlay(baseElement);
-		userEvent.click(overlay);
+		await userEvent.click(overlay);
 
 		expect(queryByTestId('outer')).toBeTruthy();
 		expect(queryByTestId('inner')).toBeNull();
 	});
 
-	it(`should focus the dialog contents on mount`, () => {
+	it(`should focus the dialog contents on mount`, async () => {
 		const { queryByText } = render(<Comp />);
 		expect(document.activeElement).toBe(document.body);
 
-		userEvent.click(queryByText(/show/i));
+		await userEvent.click(queryByText(/show/i));
 
 		expect(document.activeElement).toBe(queryByText(/close/i));
 	});
 
-	it(`should trap focus within the dialog`, () => {
+	it(`should trap focus within the dialog`, async () => {
 		const { queryByText, queryByTestId } = render(<Comp show={true} />);
 		expect(document.activeElement).toBe(queryByText(/close/i));
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(queryByTestId('text'));
 
-		userEvent.tab();
+		await userEvent.tab();
 		expect(document.activeElement).toBe(queryByText(/close/i));
 	});
 
-	it(`should focus the initialFocusRef on mount`, () => {
+	it(`should focus the initialFocusRef on mount`, async () => {
 		const { queryByText, queryByTestId } = render(<Comp withRef/>);
 		expect(document.activeElement).toBe(document.body);
 
-		userEvent.click(queryByText(/show/i));
+		await userEvent.click(queryByText(/show/i));
 
 		expect(document.activeElement).toBe(queryByTestId('text'));
 	});

@@ -1,13 +1,13 @@
-import { useRef, useState } from 'react';
+import * as React from 'react';
 import { Dialog } from '../../src/index';
 import { VisuallyHidden } from '@react-lit/visually-hidden';
 
 export function Example() {
-	const [showDialog, setShowDialog] = useState(false);
+	const [showDialog, setShowDialog] = React.useState(false);
 	const open = () => setShowDialog(true);
 	const close = () => setShowDialog(false);
 
-	const initialFocusRef = useRef();
+	const initialFocusRef = React.useRef();
 
 	return (
 		<>
